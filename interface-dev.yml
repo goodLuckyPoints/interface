@@ -1,6 +1,18 @@
 server:
   port: 80
 spring:
+  cloud:
+    stream:
+      bindings:
+        #防止重复队列存在重复消息
+        push_sms_report_topic:                # 队列名称
+          group: msg                          # 队列组名称
+      # 实现手动ACK
+      rabbit:
+        bindings:
+          push_sms_report_topic:
+            consumer:
+              acknowledgeMode: MANUAL
   rabbitmq:
     host: 192.168.194.139
     port: 5672
